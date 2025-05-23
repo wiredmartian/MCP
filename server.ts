@@ -44,6 +44,15 @@ server.resource(
   }),
 );
 
+// @ts-ignore
+server.tool("fetch-weather", { city: z.string() }, async ({ city }) => {
+  const response = await fetch(`https://api.weather.com/${city}`);
+  const data = await response.text();
+  return {
+    content: [{ type: "text", text: data }],
+  };
+});
+
 // Start receiving messages on stdin and sending messages on stdout
 const start = async () => {
   const transport = new StdioServerTransport();

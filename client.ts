@@ -14,9 +14,6 @@ const client = new Client({
 const start = async () => {
   await client.connect(transport);
 
-  // List prompts
-  const prompts = await client.listPrompts();
-
   // Get a prompt
   const prompt = await client.getPrompt({
     name: "echo",
@@ -47,8 +44,17 @@ const start = async () => {
       b: 3,
     },
   });
-
   console.log(result);
+
+  // fetch weather
+  const weather = await client.callTool({
+    name: "fetch-weather",
+    arguments: {
+      city: "New York",
+    },
+  });
+
+  console.log(weather);
 };
 
 start()
