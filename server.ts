@@ -5,10 +5,10 @@ import {
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 import { z } from "zod";
 
-// Create an MCP server
 const server = new McpServer({
-  name: "Demo",
+  name: "Demo MCP",
   version: "1.0.0",
+  description: "A demo server for Model Context Protocol",
 });
 
 // Add an addition tool
@@ -27,7 +27,7 @@ server.prompt("echo", { message: z.string() }, ({ message }) => ({
         text: `Please process this message: ${message}`,
       },
     },
-  ] as const,
+  ],
 }));
 
 // Add a dynamic greeting resource
@@ -45,8 +45,8 @@ server.resource(
 );
 
 // @ts-ignore
-server.tool("fetch-weather", { city: z.string() }, async ({ city }) => {
-  const response = await fetch(`https://api.weather.com/${city}`);
+server.tool("fetch-data", { route: z.string() }, async ({ route }) => {
+  const response = await fetch(`https://jsonplaceholder.typicode.com/${route}`);
   const data = await response.text();
   return {
     content: [{ type: "text", text: data }],

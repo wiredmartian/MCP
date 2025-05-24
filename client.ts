@@ -24,11 +24,6 @@ const start = async () => {
 
   console.log(prompt);
 
-  // List resources
-  const resources = await client.listResources();
-
-  console.log(resources);
-
   // Read a resource
   const resource = await client.readResource({
     uri: "greeting://wiredmartians",
@@ -47,14 +42,14 @@ const start = async () => {
   console.log(result);
 
   // fetch weather
-  const weather = await client.callTool({
-    name: "fetch-weather",
+  const data = await client.callTool({
+    name: "fetch-data",
     arguments: {
-      city: "New York",
+      route: "comments",
     },
   });
 
-  console.log(weather);
+  console.log(data);
 };
 
 start()
